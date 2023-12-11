@@ -1,54 +1,44 @@
-import { Link } from "react-router-dom";
-import { useAuth } from "../AuthContext";
-import { LogoutPage } from "../LogoutPage/LogoutPage";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
+// import './Menu.css'; // Import your CSS file
 
-function Menu(){
+function Menu() {
   const { isLoggedIn, logout } = useAuth();
-  const handlelogout = () => {
-    
+
+  const handleLogout = () => {
     logout();
-    
-    localStorage.removeItem("userId");
-    localStorage.removeItem("token");
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
     localStorage.removeItem('expirationTime');
   };
-  return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
 
-          {isLoggedIn ? (
-            <>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/Visual">Visuals</Link>
-              </li>
-              <li>
-                <Link to="/login" onClick={handlelogout}>
-                  Logout
-                </Link>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/signup">Signup</Link>
-              </li>
-            </>
-          )}
-        </ul>
-      </nav>
+  return (
+    <div className='menuBox'>
+      <div>
+        <div className="menu">
+
+        <Link to="/dashboard">
+          <button className='menuButton'>Home</button>
+        </Link>
+
+        <Link to="/configure-budgets">
+            <button className='menuButton'>Configure Budgets</button>
+          </Link>
+
+          <Link to="/add-expense">
+            <button className='menuButton'>Manage Expenses</button>
+          </Link>
+
+          <Link to="/Visual">
+          <button className='menuButton'>Visuals</button>
+          </Link>
+
+          <Link to="/" onClick={handleLogout}>
+            <button className='menuButton'>Logout</button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

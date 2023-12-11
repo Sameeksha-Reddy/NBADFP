@@ -1,21 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Menu from '../Menu/Menu';
+import Hero from '../Hero/Hero';
 
 function Dashboard() {
   return (
-    <main className="center" id="main" aria-label="main">
     <div>
-      <h2>Welcome to the Dashboard!</h2>
-       
-      <Link to="/configure-budgets">
-        <button style={{marginRight:'20px'}}>Configure Budgets</button>
-      </Link>
-
-      <Link to="/add-expense">
-        <button>Manage Expenses</button>
-      </Link>
+      <Menu/>
+        <div>
+          <h2>Welcome to Personal Budget Management Application!</h2>
+        </div>
     </div>
-    </main>
   );
 }
 

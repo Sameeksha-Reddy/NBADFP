@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Chart from 'chart.js/auto';
+import Menu from '../Menu/Menu';
 
 function Visuals() {
   const [dataSource, setDataSource] = useState({
@@ -173,37 +174,6 @@ function Visuals() {
     }
   };
 
-  const createRadarChart = (chartRef, labels, budget, expenses) => {
-    if (chartRef.current) {
-      const chart = new Chart(chartRef.current, {
-        type: 'radar',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: 'Budget',
-              data: budget,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-            },
-            {
-              label: 'Expenses',
-              data: expenses,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1,
-            },
-          ],
-        },
-      });
-
-      return () => {
-        chart.destroy();
-      };
-    }
-  };
-
 
   const createdonutChart = (chartRef, data, labels) => {
     if (chartRef.current) {
@@ -226,62 +196,23 @@ function Visuals() {
     }
   };
 
-  const createChart = (chartRef, labels, budget, expenses) => {
-    if (chartRef.current) {
-      const chart = new Chart(chartRef.current, {
-        
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: 'Budget',
-              type:'bar',
-              data: budget,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-            },
-            {
-              label: 'Expenses',
-              type:'line',
-              data: expenses,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1,
-            },
-          ],
-        },
-      });
-
-      return () => {
-        chart.destroy();
-      };
-    }
-  };
-
-
-
-
   const chartRef = useRef(null);
   const expenseRef = useRef(null);
   const chart1Ref = useRef(null);
-  const chart2Ref = useRef(null);
   const chart3Ref = useRef(null);
   const chart4Ref = useRef(null);
-  const chart5Ref = useRef(null);
   
 
   useEffect(() => createPolarareaChart(chartRef, dataSource.datasets[0].budget, dataSource.labels1), [dataSource]);
   useEffect(() => createPolarareaChart(expenseRef, dataSource.datasets[0].expense, dataSource.labels2), [dataSource]);
   useEffect(() => createGroupedBarChart(chart1Ref, dataSource.labels1, dataSource.datasets[0].budget, dataSource.datasets[0].expense), [dataSource]);
-  useEffect(() => createRadarChart(chart2Ref, dataSource.labels1, dataSource.datasets[0].budget, dataSource.datasets[0].expense), [dataSource]);
   useEffect(() => createdonutChart(chart3Ref,  dataSource.datasets[0].budget,dataSource.labels1,), [dataSource]);
   useEffect(() => createdonutChart(chart4Ref,  dataSource.datasets[0].expense,dataSource.labels1,), [dataSource]);
-  useEffect(() => createChart(chart5Ref, dataSource.labels1, dataSource.datasets[0].budget, dataSource.datasets[0].expense), [dataSource]);
   
   return (
-    <main className="center" id="main" aria-label="main">
-      <div>
+    <div>
+    <Menu/>
+      <div className='selectMonth'>
         <label htmlFor="months">Select Month:</label>
         <select id="months" onChange={(e) => setSelectedMonth(e.target.value)} value={selectedMonth}>
           <option value="">Select Month</option>
@@ -297,34 +228,33 @@ function Visuals() {
              dataExists ? (
               <section>
       <section className="chart-container">
-        <article className="chart">
-          <h1>polarArea Chart - Budget</h1>
-          <p>
-            <canvas ref={chartRef} />
-          </p>
-        </article>
-        <article className="chart">
-          <h1>polarArea Chart - Expenses</h1>
-          <p>
-            <canvas ref={expenseRef} />
-          </p>
-        </article>
-        <article className="chart">
+
+<div className='groupedChart'>
+      <article className="chart">
           <h1>Grouped Bar Chart</h1>
           <p>
             <canvas ref={chart1Ref} />
           </p>
         </article>
-        <article className="chart">
-          <h1>Radar Chart</h1>
-          <p>
-            <canvas ref={chart2Ref} />
-          </p>
-        </article>
-       
-      </section>
-     
-       <section className="chart-container">
+        </div>
+
+<div className='myChart'>
+  <article className="chart">
+  <h1>PolarArea Chart - Budget</h1>
+  <div className="canvas-container">
+    <canvas ref={chartRef} />
+  </div>
+</article>
+
+<article className="chart">
+  <h1>PolarArea Chart - Expenses</h1>
+  <div className="canvas-container">
+    <canvas ref={expenseRef} />
+  </div>
+</article>
+</div>
+
+<div className='myChart'>
        <article className="chart">
           <h1>Donught Chart- Budgets</h1>
           <p>
@@ -337,13 +267,9 @@ function Visuals() {
            <canvas ref={chart4Ref} />
          </p>
        </article>
-       <article className="chart">
-         <h1>combo Chart - Expenses</h1>
-         <p>
-           <canvas ref={chart5Ref} />
-         </p>
-       </article>
-       </section>
+       </div>
+       
+      </section>
        </section>
      
        ) : (
@@ -354,10 +280,10 @@ function Visuals() {
          
        ) : (
         <div>
-          <p>Loading...</p>
+          <p>Select Month...</p>
         </div>
       )}
-    </main>
+    </div>
   );
 }
 

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
+import Menu from '../Menu/Menu';
 
 function ManageExpense() {
  // const { isLoggedIn } = useAuth();
@@ -89,10 +90,12 @@ function ManageExpense() {
   };
 
   return (
-    <main className="center" id="main" aria-label="main">
+    <div>
+    <Menu/>
     <div>
       <h2>Manage Expenses</h2>
 
+      <div className='selectExp'>
       <label htmlFor="month">Month:</label>
       <select
         id="month"
@@ -107,7 +110,9 @@ function ManageExpense() {
           </option>
         ))}
       </select>
+      </div>
 
+      <div className='selectExp'>
       <label htmlFor="category">Category:</label>
       <select
         id="category"
@@ -122,24 +127,27 @@ function ManageExpense() {
           </option>
         ))}
       </select>
+      </div>
 
+      <div style={{marginTop:'20px'}}>
       <label htmlFor="expenseAmount">Expense Amount:</label>
+      </div>
       <input
         type="number"
         id="expenseAmount"
         value={expense}
         onChange={(e) => setExpenseAmount(e.target.value)}
-        style={{marginRight:'15px'}}
+        style={{marginTop:'10px'}}
       />
          {expenseAdded && <p>Expense added successfully!</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <button onClick={handleAddExpense}  style={{marginRight:'15px'}}>Add Expense</button>
-      <button type="button" onClick={handleBack} >
+      <button className="buttonManage" onClick={handleAddExpense}  style={{marginRight:'15px'}}>Add Expense</button>
+      <button className="buttonManage" type="button" onClick={handleBack} >
         Back
       </button>
     </div>
-    </main>
+    </div>
   );
 }
 

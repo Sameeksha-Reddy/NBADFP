@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Menu from "../Menu/Menu";
 
 function ConfigureBudgets() {
   const [category, setCategory] = useState("");
@@ -109,9 +110,11 @@ function ConfigureBudgets() {
 
 
   return (
-    <main className="center" id="main" aria-label="main">
+    <div>
+    <Menu/>
     <div>
       <h2>Configure Budgets</h2>
+
       <div>
         <label htmlFor="months">Month:</label>
         <select
@@ -128,6 +131,7 @@ function ConfigureBudgets() {
           ))}
         </select>
       </div>
+
       <div>
         <label htmlFor="category">Category:</label>
         <input
@@ -138,6 +142,7 @@ function ConfigureBudgets() {
           style={{marginBottom:'10px'}}
         />
       </div>
+
       <div>
         <label htmlFor="budget">Budget:</label>
         <input
@@ -148,28 +153,30 @@ function ConfigureBudgets() {
           style={{marginBottom:'10px'}}
         />
       </div>
-      <button type="button" onClick={handleAddBudget}>
+
+      <button className="buttonManage" type="button" onClick={handleAddBudget}>
         Add Budget
       </button>
+
       {feedbackMessage && <p>{feedbackMessage}</p>}
       <ul>
         {budgetList.map((item, index) => (
           <li key={index}>
             {item.category}: {item.budget}
-            <button type="button" onClick={() => handleEditBudget(index)} >
+            <button className="buttonManage" type="button" onClick={() => handleEditBudget(index)} >
               Edit
             </button>
           </li>
         ))}
       </ul>
-      <button type="button" onClick={handleSaveBudgets}  style={{marginRight:'15px'}}>
+      <button className="buttonManage" type="button" onClick={handleSaveBudgets}  style={{marginRight:'15px'}}>
         Save Budgets
       </button>
-      <button type="button" onClick={handleBack}>
+      <button className="buttonManage" type="button" onClick={handleBack}>
         Back
       </button>
     </div>
-    </main>
+    </div>
   );
 }
 
